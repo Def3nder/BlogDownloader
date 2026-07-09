@@ -1,0 +1,5 @@
+beautifulsoup4
+markdownify
+Pillow
+playwright
+requests
