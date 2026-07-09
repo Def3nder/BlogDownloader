@@ -1,0 +1,23 @@
+{
+  "name": "blog-downloader-node",
+  "version": "1.0.0",
+  "description": "Konsolidierter Scraper (Blog + Facebook + Telegram) — Node.js-Portierung von scrape_all.py",
+  "type": "module",
+  "bin": {
+    "scrape-all": "./scrape_all.js"
+  },
+  "scripts": {
+    "start": "node scrape_all.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "commander": "^12.1.0",
+    "difflib": "^0.2.4",
+    "playwright": "^1.48.0",
+    "sharp": "^0.33.5",
+    "turndown": "^7.2.0"
+  }
+}

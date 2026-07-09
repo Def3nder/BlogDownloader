@@ -1,0 +1,8 @@
+node_modules/
+
+# Scraped output (eigenständig in node/ erzeugt)
+www/
+
+# private data
+cookies.txt
+Abonenten-URL.txt
