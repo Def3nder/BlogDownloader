@@ -1496,10 +1496,13 @@ export {
 // Nur bei Direktaufruf (node scrape_all.js …) ausführen, nicht beim Import.
 const _isMain = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
 if (_isMain) {
+  // Kein process.exit(): sonst kann Node bei einer stdout-Pipe (spawn) die
+  // letzten Zeilen (Zusammenfassung) abschneiden. exitCode setzen und den
+  // Prozess natürlich auslaufen lassen -> stdout wird vollständig geleert.
   main(process.argv.slice(2))
-    .then((code) => process.exit(code))
+    .then((code) => { process.exitCode = code; })
     .catch((exc) => {
       logger.error(`Unerwarteter Fehler: ${exc && exc.stack ? exc.stack : exc}`);
-      process.exit(1);
+      process.exitCode = 1;
     });
 }

@@ -62,7 +62,7 @@ LOG_FILE = SCRIPT_DIR / "scrape_all.log"
 
 # Gemeinsame Abbruchschwelle: nach so vielen bereits vorhandenen Artikeln wird
 # die jeweilige Quelle beendet.
-SKIP_LIMIT = 5
+SKIP_LIMIT = 3
 
 USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
