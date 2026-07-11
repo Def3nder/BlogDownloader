@@ -112,7 +112,9 @@ LEADING_INTRO_RE = re.compile(
     r"(?:morgen|abend|tages|gesundheits?|achtsamkeits?|lebens?|herz(?:ens)?|liebes?|beziehungs?)?[\s\-]*"
     r"(?:impuls|gedanke|frage|gru[ßss]|tipp|botschaft|reminder|erinnerung)"
     r"(?:\s+(?:des\s+tages|für\s+dich|an\s+dich|von\s+mir))?"
-    r")\s*[:\-–—]?\s*$",
+    # Zeilenende: optionales Satzzeichen, danach beliebige Nicht-Wort-Zeichen
+    # (Whitespace, Emojis wie ☀️/🤍, Satzzeichen) – analog zu GREETING_RE.
+    r")\s*[:\-–—]?[\s\W]*$",
     re.IGNORECASE,
 )
 SLUG_CLEAN_RE = re.compile(r"[^A-Za-z0-9äöüÄÖÜß ]+")
@@ -523,6 +525,7 @@ def extract_content_markdown(soup: BeautifulSoup, title: str) -> str:
         if md:
             chunks.append(md)
     result = "\n\n".join(chunks).strip()
+    result = strip_leading_intro(result)
     result = strip_cta_block_paragraphs(result)
     return strip_signature(result)
 

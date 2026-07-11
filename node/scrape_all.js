@@ -150,7 +150,7 @@ const sleep = (seconds) => new Promise((r) => setTimeout(r, seconds * 1000));
 // ---------------------------------------------------------------------------
 const SENTENCE_SPLIT_RE = /[.!?…\n\r]/;
 const LEADING_INTRO_RE =
-  /^\s*(?:(?:ein|mein|dein|heutiger|kurzer|kleiner)?\s*(?:morgen|abend|tages|gesundheits?|achtsamkeits?|lebens?|herz(?:ens)?|liebes?|beziehungs?)?[\s\-]*(?:impuls|gedanke|frage|gru[ßss]|tipp|botschaft|reminder|erinnerung)(?:\s+(?:des\s+tages|für\s+dich|an\s+dich|von\s+mir))?)\s*[:\-–—]?\s*$/i;
+  /^\s*(?:(?:ein|mein|dein|heutiger|kurzer|kleiner)?\s*(?:morgen|abend|tages|gesundheits?|achtsamkeits?|lebens?|herz(?:ens)?|liebes?|beziehungs?)?[\s\-]*(?:impuls|gedanke|frage|gru[ßss]|tipp|botschaft|reminder|erinnerung)(?:\s+(?:des\s+tages|für\s+dich|an\s+dich|von\s+mir))?)\s*[:\-–—]?[^\p{L}\p{N}_]*$/iu;
 const SLUG_CLEAN_RE = /[^A-Za-z0-9äöüÄÖÜß ]+/g;
 const SLUG_MULTI_UNDERSCORE_RE = /_+/g;
 // Maximale Länge des Titel-Teils im Dateinamen (ohne Datum/Autor-Präfix).
@@ -531,6 +531,7 @@ function extractContentMarkdown($, title) {
     if (md) chunks.push(md);
   });
   let result = chunks.join("\n\n").trim();
+  result = stripLeadingIntro(result);
   result = stripCtaBlockParagraphs(result);
   return stripSignature(result);
 }
